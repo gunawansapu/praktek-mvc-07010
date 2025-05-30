@@ -1,0 +1,76 @@
+<?php
+require_once __DIR__ . '/model/Mahasiswa.php';
+
+$model = new Mahasiswa();
+
+if (!isset($_GET['id'])) {
+    header("Location: index.php");
+    exit;
+}
+
+$id = $_GET['id'];
+$data = $model->getById($id);
+
+if (!$data) {
+    echo "Data tidak ditemukan.";
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $model->update($id, [
+        'nama' => $_POST['nama'],
+        'nim' => $_POST['nim'],
+        'jurusan' => $_POST['jurusan']
+    ]);
+    header("Location: index.php?updated=1");
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Mahasiswa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Edit Data Mahasiswa</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="nama" class="form-label">Nama</label>
+                    <input type="text" id="nama" name="nama" class="form-control" value="<?= htmlspecialchars($data['nama']) ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="nim" class="form-label">NIM</label>
+                    <input type="text" id="nim" name="nim" class="form-control" value="<?= htmlspecialchars($data['nim']) ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="jurusan" class="form-label">Jurusan</label>
+                    <select name="jurusan" class="form-select" required>
+                        <?php
+                        $jurusan_list = [
+                            "Informatika", "Sistem Informasi", "Teknik Elektro", 
+                            "Teknik Industri", "Desain Komunikasi Visual", 
+                            "Manajemen", "Akuntansi"
+                        ];
+                        foreach ($jurusan_list as $j) {
+                            $selected = $data['jurusan'] === $j ? 'selected' : '';
+                            echo "<option value=\"$j\" $selected>$j</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                <a href="index.php" class="btn btn-secondary ms-2">← Kembali</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
