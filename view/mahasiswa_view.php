@@ -44,6 +44,14 @@
                         <option value="Akuntansi">Akuntansi</option>
                     </select>
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">Alamat</label>
+                    <textarea name="alamat" class="form-control" rows="2" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">No. Telepon</label>
+                    <input type="text" name="telepon" class="form-control" required>
+                </div>
                 <button type="submit" name="submit" class="btn btn-success">Tambah Mahasiswa</button>
             </form>
         </div>
@@ -52,9 +60,8 @@
     <div class="mt-5">
         <h4 class="mb-3">Daftar Mahasiswa</h4>
 
-        <!-- Input pencarian -->
         <div class="mb-3">
-            <input type="text" id="searchInput" class="form-control" placeholder="Cari nama, NIM, atau jurusan...">
+            <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan semua kolom...">
         </div>
 
         <div class="table-responsive">
@@ -64,6 +71,8 @@
                         <th>Nama</th>
                         <th>NIM</th>
                         <th>Jurusan</th>
+                        <th>Alamat</th>
+                        <th>No. Telepon</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -74,6 +83,8 @@
                             <td><?= htmlspecialchars($mhs['nama']) ?></td>
                             <td><?= htmlspecialchars($mhs['nim']) ?></td>
                             <td><?= htmlspecialchars($mhs['jurusan']) ?></td>
+                            <td><?= htmlspecialchars($mhs['alamat']) ?></td>
+                            <td><?= htmlspecialchars($mhs['telepon']) ?></td>
                             <td>
                                 <a href="edit.php?id=<?= $mhs['id'] ?>" class="btn btn-info btn-sm me-1">✎ Edit</a>
                                 <a href="index.php?delete=<?= $mhs['id'] ?>" 
@@ -83,7 +94,7 @@
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <tr><td colspan="4" class="text-center">Belum ada data mahasiswa.</td></tr>
+                    <tr><td colspan="6" class="text-center">Belum ada data mahasiswa.</td></tr>
                 <?php endif; ?>
                 </tbody>
             </table>
@@ -92,7 +103,7 @@
 
 </div>
 
-<!-- Script jQuery filter tabel -->
+<!-- jQuery Filter -->
 <script>
     $(document).ready(function () {
         $("#searchInput").on("keyup", function () {

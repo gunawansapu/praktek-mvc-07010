@@ -14,7 +14,9 @@ class MahasiswaController {
         $this->model->add([
             'nama' => $_POST['nama'],
             'nim' => $_POST['nim'],
-            'jurusan' => $_POST['jurusan']
+            'jurusan' => $_POST['jurusan'],
+            'alamat' => $_POST['alamat'],
+            'telepon' => $_POST['telepon']
         ]);
         header("Location: index.php?success=1");
         exit;

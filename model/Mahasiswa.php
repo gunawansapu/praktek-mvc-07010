@@ -14,37 +14,39 @@ class Mahasiswa {
     }
 
     public function add($data) {
-        $stmt = $this->conn->prepare("INSERT INTO mahasiswa (nama, nim, jurusan) VALUES (:nama, :nim, :jurusan)");
+        $stmt = $this->conn->prepare("INSERT INTO mahasiswa (nama, nim, jurusan, alamat, telepon) VALUES (:nama, :nim, :jurusan, :alamat, :telepon)");
         $stmt->execute([
             ':nama' => $data['nama'],
             ':nim' => $data['nim'],
-            ':jurusan' => $data['jurusan']
+            ':jurusan' => $data['jurusan'],
+            ':alamat' => $data['alamat'],
+            ':telepon' => $data['telepon']
         ]);
     }
 
     public function delete($id)
-{
-    $stmt = $this->conn->prepare("DELETE FROM mahasiswa WHERE id = ?");
-    $stmt->execute([$id]);
-}
+    {
+        $stmt = $this->conn->prepare("DELETE FROM mahasiswa WHERE id = ?");
+        $stmt->execute([$id]);
+    }
 
-public function getById($id)
-{
-    $stmt = $this->conn->prepare("SELECT * FROM mahasiswa WHERE id = ?");
-    $stmt->execute([$id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
+    public function getById($id)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM mahasiswa WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
-public function update($id, $data)
-{
-    $stmt = $this->conn->prepare("UPDATE mahasiswa SET nama = ?, nim = ?, jurusan = ? WHERE id = ?");
-    $stmt->execute([
-        $data['nama'],
-        $data['nim'],
-        $data['jurusan'],
-        $id
-    ]);
-}
-
-
+    public function update($id, $data)
+    {
+        $stmt = $this->conn->prepare("UPDATE mahasiswa SET nama = ?, nim = ?, jurusan = ?, alamat = ?, telepon = ? WHERE id = ?");
+        $stmt->execute([
+            $data['nama'],
+            $data['nim'],
+            $data['jurusan'],
+            $data['alamat'],
+            $data['telepon'],
+            $id
+        ]);
+    }
 }
